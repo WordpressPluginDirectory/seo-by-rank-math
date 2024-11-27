@@ -1,23 +1,26 @@
 <?php
 /**
- * The FAQ Block
+ * The Faq Block
  *
- * @since      0.9.0
+ * @since      1.0.233
  * @package    RankMath
- * @subpackage RankMath\Schema
+ * @subpackage RankMath\Faq
  * @author     Rank Math <support@rankmath.com>
  */
 
 namespace RankMath\Schema;
 
 use WP_Block_Type_Registry;
+use RankMath\Traits\Hooker;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Block_FAQ class.
+ * Faq Block class.
  */
 class Block_FAQ extends Block {
+
+	use Hooker;
 
 	/**
 	 * Block type name.
@@ -52,56 +55,20 @@ class Block_FAQ extends Block {
 	 * The Constructor.
 	 */
 	public function __construct() {
-
 		if ( WP_Block_Type_Registry::get_instance()->is_registered( $this->block_type ) ) {
 			return;
 		}
 
 		register_block_type(
-			$this->block_type,
+			RANK_MATH_PATH . 'includes/modules/schema/blocks/faq/block.json',
 			[
 				'render_callback' => [ $this, 'render' ],
-				'editor_style'    => 'rank-math-block-admin',
-				'attributes'      => [
-					'listStyle'         => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'titleWrapper'      => [
-						'type'    => 'string',
-						'default' => 'h3',
-					],
-					'sizeSlug'          => [
-						'type'    => 'string',
-						'default' => 'thumbnail',
-					],
-					'questions'         => [
-						'type'    => 'array',
-						'default' => [],
-						'items'   => [ 'type' => 'object' ],
-					],
-					'listCssClasses'    => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'titleCssClasses'   => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'contentCssClasses' => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'textAlign'         => [
-						'type'    => 'string',
-						'default' => 'left',
-					],
-				],
 			]
 		);
 
 		add_filter( 'rank_math/schema/block/faq-block', [ $this, 'add_graph' ], 10, 2 );
 	}
+
 
 	/**
 	 * Add FAQ schema data in JSON-LD array.
@@ -240,4 +207,5 @@ class Block_FAQ extends Block {
 	private function has_questions( $attributes ) {
 		return ! isset( $attributes['questions'] ) || empty( $attributes['questions'] ) ? false : true;
 	}
+
 }

@@ -2,18 +2,19 @@
 /**
  * The HowTo Block
  *
- * @since      0.9.0
+ * @since      1.0.233
  * @package    RankMath
- * @subpackage RankMath\Schema
+ * @subpackage RankMath\HowTo
  * @author     Rank Math <support@rankmath.com>
  */
 
 namespace RankMath\Schema;
 
-use RankMath\Paper\Paper;
-use RankMath\Helpers\Str;
-use RankMath\Helpers\Attachment;
 use WP_Block_Type_Registry;
+use RankMath\Traits\Hooker;
+use RankMath\Paper\Paper;
+use RankMath\Helpers\Attachment;
+use RankMath\Helpers\Str;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,6 +22,8 @@ defined( 'ABSPATH' ) || exit;
  * HowTo Block class.
  */
 class Block_HowTo extends Block {
+
+	use Hooker;
 
 	/**
 	 * Block type name.
@@ -60,76 +63,9 @@ class Block_HowTo extends Block {
 		}
 
 		register_block_type(
-			$this->block_type,
+			RANK_MATH_PATH . 'includes/modules/schema/blocks/howto/block.json',
 			[
 				'render_callback' => [ $this, 'render' ],
-				'editor_style'    => 'rank-math-block-admin',
-				'attributes'      => [
-					'hasDuration'       => [
-						'type'    => 'boolean',
-						'default' => false,
-					],
-					'days'              => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'hours'             => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'minutes'           => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'description'       => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'steps'             => [
-						'type'    => 'array',
-						'default' => [],
-						'items'   => [ 'type' => 'object' ],
-					],
-					'sizeSlug'          => [
-						'type'    => 'string',
-						'default' => 'full',
-					],
-					'imageID'           => [
-						'type' => 'integer',
-					],
-					'mainSizeSlug'      => [
-						'type'    => 'string',
-						'default' => 'full',
-					],
-					'listStyle'         => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'timeLabel'         => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'titleWrapper'      => [
-						'type'    => 'string',
-						'default' => 'h3',
-					],
-					'listCssClasses'    => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'titleCssClasses'   => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'contentCssClasses' => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'textAlign'         => [
-						'type'    => 'string',
-						'default' => 'left',
-					],
-				],
 			]
 		);
 
@@ -514,4 +450,5 @@ class Block_HowTo extends Block {
 	private function has_steps( $attributes ) {
 		return ! isset( $attributes['steps'] ) || empty( $attributes['steps'] ) ? false : true;
 	}
+
 }
