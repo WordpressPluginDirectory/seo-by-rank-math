@@ -27,7 +27,9 @@ defined( 'ABSPATH' ) || exit;
  */
 abstract class Plugin_Importer {
 
-	use Hooker, Ajax, Meta;
+	use Hooker;
+	use Ajax;
+	use Meta;
 
 	/**
 	 * The plugin name.
@@ -83,7 +85,7 @@ abstract class Plugin_Importer {
 	 *
 	 * @var array
 	 */
-	protected $_pagination_args = [];
+	protected $pagination_args = [];
 
 	/**
 	 * General settings.
@@ -377,11 +379,11 @@ abstract class Plugin_Importer {
 	/**
 	 * Convert Yoast / AIO SEO variables if needed.
 	 *
-	 * @param string $string Value to convert.
+	 * @param string $value Value to convert.
 	 * @return string
 	 */
-	protected function convert_variables( $string ) {
-		return str_replace( '%%', '%', $string );
+	protected function convert_variables( $value ) {
+		return str_replace( '%%', '%', $value );
 	}
 
 	/**
@@ -412,7 +414,7 @@ abstract class Plugin_Importer {
 		$args['start'] = ( ( $args['page'] - 1 ) * $this->items_per_page ) + 1;
 		$args['end']   = min( $args['page'] * $this->items_per_page, $total_items );
 
-		$this->_pagination_args = $args;
+		$this->pagination_args = $args;
 	}
 
 	/**
@@ -423,10 +425,10 @@ abstract class Plugin_Importer {
 	 */
 	protected function get_pagination_arg( $key = false ) {
 		if ( false === $key ) {
-			return $this->_pagination_args;
+			return $this->pagination_args;
 		}
 
-		return isset( $this->_pagination_args[ $key ] ) ? $this->_pagination_args[ $key ] : false;
+		return isset( $this->pagination_args[ $key ] ) ? $this->pagination_args[ $key ] : false;
 	}
 
 	/**
