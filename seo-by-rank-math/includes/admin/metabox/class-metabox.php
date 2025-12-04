@@ -61,7 +61,7 @@ class Metabox implements Runner {
 			}
 
 			// Add taxonomy metabox hooks.
-			$this->add_taxonomy_metabox_hooks();
+			$this->action( 'init', 'add_taxonomy_metabox_hooks', 9999 );
 		}
 
 		$this->action( 'save_post', 'save_meta', 10, 2 );
@@ -350,6 +350,26 @@ class Metabox implements Runner {
 	}
 
 	/**
+	 * Add taxonomy metabox hooks.
+	 */
+	public function add_taxonomy_metabox_hooks() {
+		if ( $this->can_add_metabox() ) {
+			return;
+		}
+
+		$taxonomies = Helper::get_allowed_taxonomies();
+		if ( empty( $taxonomies ) ) {
+			return;
+		}
+
+		// Add metabox for taxonomies.
+		foreach ( $taxonomies as $taxonomy ) {
+			// For editing existing terms - renders after the table.
+			add_action( "{$taxonomy}_edit_form", [ $this, 'render_taxonomy_metabox' ], 10, 2 );
+		}
+	}
+
+	/**
 	 * Get metabox priority
 	 *
 	 * @return string
@@ -406,26 +426,6 @@ class Metabox implements Runner {
 		if ( function_exists( 'wp_set_script_translations' ) ) {
 			wp_set_script_translations( 'rank-math-analyzer', 'rank-math', rank_math()->plugin_dir() . 'languages/' );
 			wp_set_script_translations( 'rank-math-app', 'rank-math', rank_math()->plugin_dir() . 'languages/' );
-		}
-	}
-
-	/**
-	 * Add taxonomy metabox hooks.
-	 */
-	private function add_taxonomy_metabox_hooks() {
-		if ( $this->can_add_metabox() ) {
-			return;
-		}
-
-		$taxonomies = Helper::get_allowed_taxonomies();
-		if ( empty( $taxonomies ) ) {
-			return;
-		}
-
-		// Add metabox for taxonomies.
-		foreach ( $taxonomies as $taxonomy ) {
-			// For editing existing terms - renders after the table.
-			add_action( "{$taxonomy}_edit_form", [ $this, 'render_taxonomy_metabox' ], 10, 2 );
 		}
 	}
 

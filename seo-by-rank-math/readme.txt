@@ -5,7 +5,7 @@ Tags: seo, WordPress SEO, google search console, schema, redirection,
 Tested up to: 6.9
 Requires at least: 6.3
 Requires PHP: 7.4
-Stable tag: 1.0.259
+Stable tag: 1.0.259.1
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -349,5 +349,10 @@ Please drop us an email at support@rankmath.com, and we will be more than happy 
 - Fixed: Compatibility issue with Colibri Page Builder PRO was causing the Rank Math SEO metabox to not display
 - Fixed: Invalid [Renew Content AI credits date](https://rankmath.com/kb/general-settings/#credits-left) was being shown on some setups
 - Removed: [React Settings UI](https://rankmath.com/kb/react-migration/#what-to-expect) from the modules page
+
+= 1.0.259.1 [Dec 04, 2025] =
+- Fixed: Rank Math SEO metabox not appearing on Product Category pages after the last update
+- Fixed:Compatibility issues with certain plugin and theme shortcodes when the [Slack Enhanced Sharing option](https://rankmath.com/kb/titles-and-meta/#posts-slack-enhanced-sharing) is enabled
+- Fixed: Minor UI issue in the [Schema type field](https://rankmath.com/kb/titles-and-meta/#rich-snippet-type) in WordPress v6.9
 
 Full changelog can be found here - **[Rank Math changelog](https://rankmath.com/changelog/?utm_source=Plugin&utm_medium=Changelog&utm_campaign=WP)**
